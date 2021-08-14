@@ -1,9 +1,15 @@
 import {useEffect, useState} from "react";
-import Cow from './Cow'
+import SlidingPane from "react-sliding-pane";
+import "react-sliding-pane/dist/react-sliding-pane.css";
+import Cow from './Cow';
 
 const ListCows = () => {
     const [allCows, setAllCows] = useState([])
     const [cowNames, setCowNames] = useState([])
+    const [sidePanel, setSidePanel] = useState({
+        isPaneOpen: false,
+        isPanelOpenLeft: false,
+    })
 
     useEffect(() => {
         fetchCows()
@@ -25,7 +31,7 @@ const ListCows = () => {
         } else {
             let results = allCows.filter((cow) => cow.name.toLowerCase().startsWith(search))
             if (results.length === 0) {
-                results = allCows.filter((cow) => cow.id.search(search) !== -1)
+                results = allCows.filter((cow) => cow.id.search(searchTerm) !== -1)
             }
             if (results.length === 0) {
                 results = allCows.filter((cow) => cow.finder.toLowerCase().startsWith(search))
@@ -85,13 +91,28 @@ const ListCows = () => {
                                 <tbody className="bg-white divide-y divide-gray-200">
                                 {cowNames.map((cow) => (
                                     <Cow key={cow.id} id={cow.id} name={cow.name} image={cow.image} finder={cow.finder}
-                                         date={cow.date}/>))}
+                                         date={cow.date} setSidePanel={setSidePanel}/>))}
                                 </tbody>
                             )}
                         </table>
                     </div>
                 </div>
             </div>
+            <SlidingPane
+                className="some-custom-class"
+                overlayClassName="some-custom-overlay-class"
+                isOpen={sidePanel.isPaneOpen}
+                title="Hey, it is optional pane title.  I can be React component too."
+                subtitle="Optional subtitle."
+                onRequestClose={() => {
+                    // triggered on "<" on left top click or on outside click
+                    setSidePanel({ isPaneOpen: false });
+                }}
+            >
+                <div>And I am pane content. BTW, what rocks?</div>
+                <br />
+                <img src="img.png" />
+            </SlidingPane>
         </div>
     )
 }

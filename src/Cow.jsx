@@ -1,5 +1,5 @@
 const Cow = (props) => {
-    const { id, image, name, date, finder } = props;
+    const { id, image, name, date, finder, setSidePanel } = props;
     return (
         <tr key={id}>
             <td className="px-6 py-4 whitespace-nowrap">
@@ -20,7 +20,9 @@ const Cow = (props) => {
             </td>
             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{finder}</td>
             <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                <a href="#" className="text-indigo-600 hover:text-indigo-900">
+                <a href="#" className="text-indigo-600 hover:text-indigo-900" onClick={
+                    () => setSidePanel({isPaneOpen: true})
+                }>
                     Edit
                 </a>
             </td>
