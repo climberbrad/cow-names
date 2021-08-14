@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import Cow from './Cow'
 
 const ListCows = () => {
+    const [allCows, setAllCows] = useState([])
     const [cowNames, setCowNames] = useState([])
 
     useEffect(() => {
@@ -12,18 +13,20 @@ const ListCows = () => {
         const res = await fetch(`data.json`);
         const json = await res.json();
         setCowNames(json.cows);
+        setAllCows(json.cows);
     }
 
     function searchCows(searchTerm) {
+        setCowNames(allCows)
         if (searchTerm == null || searchTerm.length === 0) {
-            setCowNames(fetchCows())
+            setCowNames(allCows)
         } else {
-            let results = cowNames.filter((cow) => cow.name.toLowerCase().search(searchTerm.toLowerCase()) !== -1)
+            let results = allCows.filter((cow) => cow.name.toLowerCase().search(searchTerm.toLowerCase()) !== -1)
             if (results.length === 0) {
-                results = cowNames.filter((cow) => cow.id.search(searchTerm) !== -1)
+                results = allCows.filter((cow) => cow.id.search(searchTerm) !== -1)
             }
             if (results.length === 0) {
-                results = cowNames.filter((cow) => cow.finder.toLowerCase().search(searchTerm.toLowerCase()) !== -1)
+                results = allCows.filter((cow) => cow.finder.toLowerCase().search(searchTerm.toLowerCase()) !== -1)
             }
             setCowNames(results)
         }
