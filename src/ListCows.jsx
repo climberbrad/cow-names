@@ -7,10 +7,6 @@ import CowDetails from "./CowDetails";
 const ListCows = () => {
     const [allCows, setAllCows] = useState([])
     const [cowNames, setCowNames] = useState([])
-    const [sidePanel, setSidePanel] = useState({
-        isPaneOpen: false,
-        isPanelOpenLeft: false,
-    })
 
     useEffect(() => {
         fetchCows()
@@ -93,26 +89,13 @@ const ListCows = () => {
                                 {cowNames.map((cow) => (
                                     <CowRow key={cow.id} id={cow.id} name={cow.name} image={cow.image}
                                             finder={cow.finder}
-                                            date={cow.date} setSidePanel={setSidePanel}/>))}
+                                            date={cow.date} />))}
                                 </tbody>
                             )}
                         </table>
                     </div>
                 </div>
             </div>
-            <SlidingPane
-                className="some-custom-class"
-                overlayClassName="some-custom-overlay-class"
-                isOpen={sidePanel.isPaneOpen}
-                title="Ferdinand"
-                subtitle="Named on: 4-25-2021"
-                onRequestClose={() => {
-                    // triggered on "<" on left top click or on outside click
-                    setSidePanel({isPaneOpen: false});
-                }}
-            >
-                <CowDetails id="B3" name="Ferdinand" date="05-25-2021" image="" finder="Alanya" />
-            </SlidingPane>
         </div>
     )
 }

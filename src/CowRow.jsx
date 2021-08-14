@@ -1,5 +1,15 @@
+import SlidingPane from "react-sliding-pane";
+import CowDetails from "./CowDetails";
+import {useState} from "react";
+
 const CowRow = (props) => {
-    const { id, image, name, date, finder, setSidePanel } = props;
+    const {id, image, name, date, finder} = props;
+
+    const [sidePanel, setSidePanel] = useState({
+        isPaneOpen: false,
+        isPanelOpenLeft: false,
+    })
+
     return (
         <tr key={id}>
             <td className="px-6 py-4 whitespace-nowrap">
@@ -26,7 +36,20 @@ const CowRow = (props) => {
                     Edit
                 </a>
             </td>
+            <SlidingPane
+                className="some-custom-class"
+                overlayClassName="some-custom-overlay-class"
+                isOpen={sidePanel.isPaneOpen}
+                title={name}
+                subtitle={date}
+                onRequestClose={() => {
+                    // triggered on "<" on left top click or on outside click
+                    setSidePanel({isPaneOpen: false});
+                }}
+            >
+                <CowDetails id={id} name={name} date={date} image={image} finder={finder}/>
+            </SlidingPane>
         </tr>
-    )
+)
 }
 export default CowRow;
