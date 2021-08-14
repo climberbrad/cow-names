@@ -69,8 +69,12 @@ const ListCows = () => {
                                     <form onSubmit={e => {
                                         e.preventDefault();
                                     }}>
-                                        <label>Search:&nbsp;</label>
-                                        <input name="search" onChange={(e) => searchCows(e.target.value)}/>
+                                        <label
+                                            className="px-2 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Search</label>
+                                        <input
+                                            className="border border-gray-400 rounded-md shadow-sm divide-y divide-gray-500"
+                                            name="search" onChange={(e) => searchCows(e.target.value)}/>
                                     </form>
                                 </th>
                             </tr>
