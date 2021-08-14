@@ -1,4 +1,4 @@
-const Cow = (props) => {
+const CowRow = (props) => {
     const { id, image, name, date, finder, setSidePanel } = props;
     return (
         <tr key={id}>
@@ -29,4 +29,4 @@ const Cow = (props) => {
         </tr>
     )
 }
-export default Cow;
+export default CowRow;

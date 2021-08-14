@@ -1,7 +1,8 @@
 import {useEffect, useState} from "react";
 import SlidingPane from "react-sliding-pane";
 import "react-sliding-pane/dist/react-sliding-pane.css";
-import Cow from './Cow';
+import CowRow from './CowRow';
+import CowDetails from "./CowDetails";
 
 const ListCows = () => {
     const [allCows, setAllCows] = useState([])
@@ -90,8 +91,9 @@ const ListCows = () => {
                             {(cowNames && cowNames?.length > 0) && (
                                 <tbody className="bg-white divide-y divide-gray-200">
                                 {cowNames.map((cow) => (
-                                    <Cow key={cow.id} id={cow.id} name={cow.name} image={cow.image} finder={cow.finder}
-                                         date={cow.date} setSidePanel={setSidePanel}/>))}
+                                    <CowRow key={cow.id} id={cow.id} name={cow.name} image={cow.image}
+                                            finder={cow.finder}
+                                            date={cow.date} setSidePanel={setSidePanel}/>))}
                                 </tbody>
                             )}
                         </table>
@@ -102,16 +104,14 @@ const ListCows = () => {
                 className="some-custom-class"
                 overlayClassName="some-custom-overlay-class"
                 isOpen={sidePanel.isPaneOpen}
-                title="Hey, it is optional pane title.  I can be React component too."
-                subtitle="Optional subtitle."
+                title="Ferdinand"
+                subtitle="Named on: 4-25-2021"
                 onRequestClose={() => {
                     // triggered on "<" on left top click or on outside click
-                    setSidePanel({ isPaneOpen: false });
+                    setSidePanel({isPaneOpen: false});
                 }}
             >
-                <div>And I am pane content. BTW, what rocks?</div>
-                <br />
-                <img src="img.png" />
+                <CowDetails id="B3" name="Ferdinand" date="05-25-2021" image="" finder="Alanya" />
             </SlidingPane>
         </div>
     )
