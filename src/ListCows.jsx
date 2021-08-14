@@ -21,12 +21,12 @@ const ListCows = () => {
         if (searchTerm == null || searchTerm.length === 0) {
             setCowNames(allCows)
         } else {
-            let results = allCows.filter((cow) => cow.name.toLowerCase().search(searchTerm.toLowerCase()) !== -1)
+            let results = allCows.filter((cow) => cow.name.toLowerCase().startsWith(searchTerm.toLowerCase()))
             if (results.length === 0) {
                 results = allCows.filter((cow) => cow.id.search(searchTerm) !== -1)
             }
             if (results.length === 0) {
-                results = allCows.filter((cow) => cow.finder.toLowerCase().search(searchTerm.toLowerCase()) !== -1)
+                results = allCows.filter((cow) => cow.finder.toLowerCase().startsWith(searchTerm.toLowerCase()))
             }
             setCowNames(results)
         }
@@ -73,7 +73,7 @@ const ListCows = () => {
                                             className="px-2 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             Search</label>
                                         <input
-                                            className="border border-gray-400 rounded-md shadow-sm divide-y divide-gray-500"
+                                            className="outline-none border border-gray-400 rounded-md shadow-sm divide-y divide-gray-500"
                                             name="search" onChange={(e) => searchCows(e.target.value)}/>
                                     </form>
                                 </th>
