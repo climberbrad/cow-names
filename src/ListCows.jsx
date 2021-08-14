@@ -18,15 +18,17 @@ const ListCows = () => {
 
     function searchCows(searchTerm) {
         setCowNames(allCows)
-        if (searchTerm == null || searchTerm.length === 0) {
+        const search = searchTerm.toLowerCase().trim()
+
+        if (search == null || searchTerm.length === 0) {
             setCowNames(allCows)
         } else {
-            let results = allCows.filter((cow) => cow.name.toLowerCase().startsWith(searchTerm.toLowerCase()))
+            let results = allCows.filter((cow) => cow.name.toLowerCase().startsWith(search))
             if (results.length === 0) {
-                results = allCows.filter((cow) => cow.id.search(searchTerm) !== -1)
+                results = allCows.filter((cow) => cow.id.search(search) !== -1)
             }
             if (results.length === 0) {
-                results = allCows.filter((cow) => cow.finder.toLowerCase().startsWith(searchTerm.toLowerCase()))
+                results = allCows.filter((cow) => cow.finder.toLowerCase().startsWith(search))
             }
             setCowNames(results)
         }
