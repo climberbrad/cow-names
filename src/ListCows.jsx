@@ -13,10 +13,16 @@ const ListCows = () => {
     }, [])
 
     async function fetchCows() {
-        const res = await fetch(`data.json`);
+        const res = await fetch('http://localhost:8080/v0/cows');
+
+        if (!res.ok) {
+            console.error(`Error encountered ${res.error()}`);
+            throw new Error(res.error)
+        }
+
         const json = await res.json();
-        setCowNames(json.cows);
-        setAllCows(json.cows);
+        setCowNames(json);
+        setAllCows(json);
     }
 
     function searchCows(searchTerm) {
@@ -28,13 +34,38 @@ const ListCows = () => {
         } else {
             let results = allCows.filter((cow) => cow.name.toLowerCase().startsWith(search))
             if (results.length === 0) {
-                results = allCows.filter((cow) => cow.id.search(searchTerm) !== -1)
+                results = allCows.filter((cow) => cow.id.toLowerCase().startsWith(search))
             }
             if (results.length === 0) {
                 results = allCows.filter((cow) => cow.finder.toLowerCase().startsWith(search))
             }
             setCowNames(results)
         }
+    }
+
+    async function saveCow(name, id, date, image, finder) {
+        if (id) {
+            const requestOptions = {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(
+                    {
+                        name: name,
+                        id: id,
+                        date: date,
+                        image: image,
+                        finder: finder
+                    })
+            };
+            const resp = await fetch('http://localhost:8080/v0/cows', requestOptions);
+            if (!resp.ok) {
+                console.error(`Error encountered`);
+            }
+        }
+        await fetchCows()
     }
 
     return (
@@ -86,10 +117,16 @@ const ListCows = () => {
                             </thead>
                             {(cowNames && cowNames?.length > 0) && (
                                 <tbody className="bg-white divide-y divide-gray-200">
-                                {cowNames.map((cow) => (
-                                    <CowRow key={cow.id} id={cow.id} name={cow.name} image={cow.image}
+                                {cowNames.map((cow, idx) => (
+                                    <CowRow key={cow.id}
+                                            idx={idx}
+                                            id={cow.id}
+                                            name={cow.name}
+                                            image={cow.image}
                                             finder={cow.finder}
-                                            date={cow.date} />))}
+                                            date={cow.date}
+                                            saveCow={saveCow}/>
+                                ))}
                                 </tbody>
                             )}
                         </table>

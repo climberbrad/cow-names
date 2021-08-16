@@ -3,7 +3,7 @@ import CowDetails from "./CowDetails";
 import {useState} from "react";
 
 const CowRow = (props) => {
-    const {id, image, name, date, finder} = props;
+    const {idx, id, image, name, date, finder, saveCow} = props;
 
     const [sidePanel, setSidePanel] = useState({
         isPaneOpen: false,
@@ -47,7 +47,7 @@ const CowRow = (props) => {
                     setSidePanel({isPaneOpen: false});
                 }}
             >
-                <CowDetails id={id} name={name} date={date} image={image} finder={finder}/>
+                <CowDetails idx={idx} id={id} name={name} date={date} image={image} finder={finder} saveCow={saveCow} setSidePanel={setSidePanel}/>
             </SlidingPane>
         </tr>
 )

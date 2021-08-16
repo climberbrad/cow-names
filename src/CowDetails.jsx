@@ -1,11 +1,22 @@
+import {useState} from "react";
+
 const CowDetails = (props) => {
-    const { id, image, name, date, finder } = props;
+    const {idx, id, image, name, date, finder, saveCow, setSidePanel} = props;
+
+    const [cowName, setCowName] = useState(name);
+    const [cowId, setCowId] = useState(id);
+    const [cowFinder, setFinder] = useState(finder);
+
+
     return (
         <div className="mt-5 md:mt-0 md:col-span-2">
-            <form action="#" method="POST">
-                <div className="shadow sm:rounded-md sm:overflow-hidden">
+            <form onSubmit={(e) => {
+                e.preventDefault();
+                saveCow(cowName, cowId, date, image, cowFinder)
+                setSidePanel({isPaneOpen: false});
+            }}>
+                <div className="shadow sm:rounded-lg sm:overflow-hidden">
                     <div className="px-4 py-5 bg-white space-y-6 sm:p-6">
-
                         <div>
                             <label className="block text-sm font-medium text-gray-700">Photo</label>
                             <div className="mt-1 flex items-center">
@@ -30,6 +41,7 @@ const CowDetails = (props) => {
                                         Name
                                     </label>
                                     <input
+                                        onChange={(e) => setCowName(e.target.value)}
                                         placeholder={name}
                                         type="text"
                                         name="name"
@@ -60,6 +72,7 @@ const CowDetails = (props) => {
                                 Found By
                             </label>
                             <input
+                                onChange={(e) => setFinder(e.target.value)}
                                 placeholder={finder}
                                 type="text"
                                 name="foundBy"
