@@ -59,6 +59,7 @@ const CowDetails = (props) => {
                             </label>
                             <input
                                 placeholder={id}
+                                disabled={true}
                                 type="text"
                                 name="id"
                                 id="id"
