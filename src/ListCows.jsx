@@ -2,7 +2,6 @@ import {useEffect, useState} from "react";
 import SlidingPane from "react-sliding-pane";
 import "react-sliding-pane/dist/react-sliding-pane.css";
 import CowRow from './CowRow';
-import CowDetails from "./CowDetails";
 
 const ListCows = () => {
     const [allCows, setAllCows] = useState([])
@@ -43,8 +42,9 @@ const ListCows = () => {
         }
     }
 
-    async function saveCow(name, id, date, image, finder) {
-        if (id) {
+    async function saveCow(cow) {
+        if (cow.id) {
+            console.log("SAVE", cow)
             const requestOptions = {
                 method: 'POST',
                 mode: 'no-cors',
@@ -53,11 +53,11 @@ const ListCows = () => {
                 },
                 body: JSON.stringify(
                     {
-                        name: name,
-                        id: id,
-                        date: date,
-                        image: image,
-                        finder: finder
+                        name: cow.name,
+                        id: cow.id,
+                        date: cow.date,
+                        image: cow.image,
+                        finder: cow.finder
                     })
             };
             const resp = await fetch('http://localhost:8080/v0/cows', requestOptions);
@@ -117,15 +117,8 @@ const ListCows = () => {
                             </thead>
                             {(cowNames && cowNames?.length > 0) && (
                                 <tbody className="bg-white divide-y divide-gray-200">
-                                {cowNames.map((cow, idx) => (
-                                    <CowRow key={cow.id}
-                                            idx={idx}
-                                            id={cow.id}
-                                            name={cow.name}
-                                            image={cow.image}
-                                            finder={cow.finder}
-                                            date={cow.date}
-                                            saveCow={saveCow}/>
+                                {cowNames.map((cow) => (
+                                    <CowRow key={cow.id} cow={cow} saveCow={saveCow}/>
                                 ))}
                                 </tbody>
                             )}

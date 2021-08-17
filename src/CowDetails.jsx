@@ -1,18 +1,23 @@
 import {useState} from "react";
 
 const CowDetails = (props) => {
-    const {idx, id, image, name, date, finder, saveCow, setSidePanel} = props;
+    const {cow, saveCow, setSidePanel} = props;
 
-    const [cowName, setCowName] = useState(name);
-    const [cowId, setCowId] = useState(id);
-    const [cowFinder, setFinder] = useState(finder);
+    const [cowName, setCowName] = useState(cow.name);
+    const [cowFinder, setFinder] = useState(cow.finder);
 
+    const updateCow = () => {
+        let newCow = Object.assign({}, cow);
+        newCow.name = cowName;
+        newCow.finder = cowFinder;
+        return newCow;
+    }
 
     return (
         <div className="mt-5 md:mt-0 md:col-span-2">
             <form onSubmit={(e) => {
                 e.preventDefault();
-                saveCow(cowName, cowId, date, image, cowFinder)
+                saveCow(updateCow())
                 setSidePanel({isPaneOpen: false});
             }}>
                 <div className="shadow sm:rounded-lg sm:overflow-hidden">
@@ -42,7 +47,7 @@ const CowDetails = (props) => {
                                     </label>
                                     <input
                                         onChange={(e) => setCowName(e.target.value)}
-                                        placeholder={name}
+                                        placeholder={cow.name}
                                         type="text"
                                         name="name"
                                         id="name"
@@ -58,7 +63,7 @@ const CowDetails = (props) => {
                                 ID
                             </label>
                             <input
-                                placeholder={id}
+                                placeholder={cow.id}
                                 disabled={true}
                                 type="text"
                                 name="id"
@@ -74,7 +79,7 @@ const CowDetails = (props) => {
                             </label>
                             <input
                                 onChange={(e) => setFinder(e.target.value)}
-                                placeholder={finder}
+                                placeholder={cow.finder}
                                 type="text"
                                 name="foundBy"
                                 id="foundBy"
