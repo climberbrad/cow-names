@@ -1,4 +1,4 @@
-# Cow Names from the far
+# Cow Names from the farm
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 It is a simple app to track our favorite cows on the farm.
