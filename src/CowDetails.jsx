@@ -8,7 +8,6 @@ const CowDetails = (props) => {
     const [cowId, setCowId] = useState(cow?.Id);
 
     const updateCow = () => {
-        console.log('UPDATE COW')
         let newCow = {
             name: cowName,
             id: cowId,

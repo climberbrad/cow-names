@@ -52,7 +52,6 @@ const TheFarm = () => {
 
     async function saveCow(cow) {
         if (cow.id) {
-            console.log("SAVE", cow);
             const requestOptions = {
                 method: 'POST',
                 mode: 'no-cors',
@@ -88,7 +87,7 @@ const TheFarm = () => {
                                 <img
                                     className="block h-12 w-auto "
                                     src="barn.png"
-                                    alt="Workflow"
+                                    alt="The Farm"
                                 />
                             </a>
                         </div>

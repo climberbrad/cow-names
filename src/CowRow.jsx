@@ -38,13 +38,11 @@ const CowRow = (props) => {
                 </a>
             </td>
             <SlidingPane
-                style={{width : 50}}
-                overlayClassName="some-custom-overlay-class"
+                overlayClassName="some class name"
                 isOpen={sidePanel.isPaneOpen}
                 title={cow.name}
                 subtitle={cow.date}
                 onRequestClose={() => {
-                    // triggered on "<" on left top click or on outside click
                     setSidePanel({isPaneOpen: false});
                 }}
             >
