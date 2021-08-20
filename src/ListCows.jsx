@@ -1,72 +1,7 @@
-import {useEffect, useState} from "react";
-import SlidingPane from "react-sliding-pane";
 import "react-sliding-pane/dist/react-sliding-pane.css";
 import CowRow from './CowRow';
 
-const ListCows = () => {
-    const [allCows, setAllCows] = useState([])
-    const [cowNames, setCowNames] = useState([])
-
-    useEffect(() => {
-        fetchCows()
-    }, [])
-
-    async function fetchCows() {
-        const res = await fetch('http://localhost:8080/v0/cows');
-
-        if (!res.ok) {
-            console.error(`Error encountered ${res.error()}`);
-            throw new Error(res.error)
-        }
-
-        const json = await res.json();
-        setCowNames(json);
-        setAllCows(json);
-    }
-
-    function searchCows(searchTerm) {
-        setCowNames(allCows)
-        const search = searchTerm.toLowerCase().trim()
-
-        if (search == null || searchTerm.length === 0) {
-            setCowNames(allCows)
-        } else {
-            let results = allCows.filter((cow) => cow.name.toLowerCase().startsWith(search))
-            if (results.length === 0) {
-                results = allCows.filter((cow) => cow.id.toLowerCase().startsWith(search))
-            }
-            if (results.length === 0) {
-                results = allCows.filter((cow) => cow.finder.toLowerCase().startsWith(search))
-            }
-            setCowNames(results)
-        }
-    }
-
-    async function saveCow(cow) {
-        if (cow.id) {
-            console.log("SAVE", cow)
-            const requestOptions = {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(
-                    {
-                        name: cow.name,
-                        id: cow.id,
-                        date: cow.date,
-                        image: cow.image,
-                        finder: cow.finder
-                    })
-            };
-            const resp = await fetch('http://localhost:8080/v0/cows', requestOptions);
-            if (!resp.ok) {
-                console.error(`Error encountered`);
-            }
-        }
-        await fetchCows()
-    }
+const ListCows = ({ cowNames, saveCow }) => {
 
     return (
         <div className="flex flex-col">
@@ -101,17 +36,8 @@ const ListCows = () => {
                                     Named By
                                 </th>
                                 <th scope="col"
-                                    className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    <form onSubmit={e => {
-                                        e.preventDefault();
-                                    }}>
-                                        <label
-                                            className="px-2 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                            Search</label>
-                                        <input
-                                            className="outline-none border border-gray-400 rounded-md shadow-sm divide-y divide-gray-500"
-                                            name="search" onChange={(e) => searchCows(e.target.value)}/>
-                                    </form>
+                                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+
                                 </th>
                             </tr>
                             </thead>

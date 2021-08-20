@@ -8,6 +8,7 @@ const CowRow = (props) => {
     const [sidePanel, setSidePanel] = useState({
         isPaneOpen: false,
         isPanelOpenLeft: false,
+        hideHeader: true
     })
 
     return (
@@ -29,7 +30,7 @@ const CowRow = (props) => {
                 <div className="text-sm text-gray-500">{cow.date}</div>
             </td>
             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{cow.finder}</td>
-            <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+            <td className="px-6 py-4 whitespace-nowrap text-left text-sm font-medium">
                 <a href="#" className="text-indigo-600 hover:text-indigo-900" onClick={
                     () => setSidePanel({isPaneOpen: true})
                 }>
@@ -37,7 +38,7 @@ const CowRow = (props) => {
                 </a>
             </td>
             <SlidingPane
-                className="some-custom-class"
+                style={{width : 50}}
                 overlayClassName="some-custom-overlay-class"
                 isOpen={sidePanel.isPaneOpen}
                 title={cow.name}
