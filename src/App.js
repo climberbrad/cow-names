@@ -1,10 +1,10 @@
 import './App.css';
-import CowsPage from "./CowsPage";
+import TheFarm from "./TheFarm";
 
 function App() {
   return (
     <div>
-        <CowsPage />
+        <TheFarm />
     </div>
   );
 }

@@ -3,13 +3,19 @@ import {useState} from "react";
 const CowDetails = (props) => {
     const {cow, saveCow, setSidePanel} = props;
 
-    const [cowName, setCowName] = useState(cow.name);
-    const [cowFinder, setFinder] = useState(cow.finder);
+    const [cowName, setCowName] = useState(cow?.name);
+    const [cowFinder, setFinder] = useState(cow?.finder);
+    const [cowId, setCowId] = useState(cow?.Id);
 
     const updateCow = () => {
-        let newCow = Object.assign({}, cow);
-        newCow.name = cowName;
-        newCow.finder = cowFinder;
+        console.log('UPDATE COW')
+        let newCow = {
+            name: cowName,
+            id: cowId,
+            finder: cowFinder,
+            date: new Date().toLocaleDateString(),
+            image: '',
+        }
         return newCow;
     }
 
@@ -32,7 +38,7 @@ const CowDetails = (props) => {
                                 </div>
                                 <button
                                     type="button"
-                                    className="ml-5 bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                    className="ml-5 bg-white py-2 px-3 border border-gray-300 rounded-md shadow-sm text-sm leading-4 font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                                 >
                                     Change
                                 </button>
@@ -47,12 +53,12 @@ const CowDetails = (props) => {
                                     </label>
                                     <input
                                         onChange={(e) => setCowName(e.target.value)}
-                                        placeholder={cow.name}
+                                        placeholder={cow?.name}
                                         type="text"
                                         name="name"
                                         id="name"
                                         autoComplete="given-name"
-                                        className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                                        className="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                                     />
                                 </div>
                             </div>
@@ -63,13 +69,13 @@ const CowDetails = (props) => {
                                 ID
                             </label>
                             <input
-                                placeholder={cow.id}
-                                disabled={true}
+                                onChange={(e) => setCowId(e.target.value)}
+                                placeholder={cow?.id}
                                 type="text"
                                 name="id"
                                 id="id"
                                 autoComplete="id"
-                                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                                className="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                             />
                         </div>
 
@@ -79,12 +85,12 @@ const CowDetails = (props) => {
                             </label>
                             <input
                                 onChange={(e) => setFinder(e.target.value)}
-                                placeholder={cow.finder}
+                                placeholder={cow?.finder}
                                 type="text"
                                 name="foundBy"
                                 id="foundBy"
                                 autoComplete="foundBy"
-                                className="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
+                                className="mt-1 focus:ring-blue-500 focus:border-blue-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md"
                             />
                         </div>
 
@@ -92,7 +98,7 @@ const CowDetails = (props) => {
                     <div className="px-4 py-3 bg-gray-50 text-right sm:px-6">
                         <button
                             type="submit"
-                            className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                            className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                         >
                             Save
                         </button>

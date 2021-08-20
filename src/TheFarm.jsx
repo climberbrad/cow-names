@@ -1,9 +1,17 @@
 import {SearchIcon} from '@heroicons/react/solid'
 import {useEffect, useState} from "react";
 import ListCows from "./ListCows";
+import SlidingPane from "react-sliding-pane";
+import CowDetails from "./CowDetails";
 
 
-const CowsPage = () => {
+const TheFarm = () => {
+    const [sidePanel, setSidePanel] = useState({
+        isPaneOpen: false,
+        isPanelOpenLeft: false,
+        hideHeader: true
+    })
+
     const [allCows, setAllCows] = useState([])
     const [cowNames, setCowNames] = useState([])
 
@@ -44,7 +52,7 @@ const CowsPage = () => {
 
     async function saveCow(cow) {
         if (cow.id) {
-            console.log("SAVE", cow)
+            console.log("SAVE", cow);
             const requestOptions = {
                 method: 'POST',
                 mode: 'no-cors',
@@ -65,6 +73,7 @@ const CowsPage = () => {
                 console.error(`Error encountered`);
             }
         }
+        console.log("SAVED!");
         await fetchCows()
     }
 
@@ -112,7 +121,9 @@ const CowsPage = () => {
                     </div>
                     <div className="hidden lg:flex lg:items-center lg:justify-end xl:col-span-4">
                         <a
-                            href="#"
+                            onClick={
+                                () => setSidePanel({isPaneOpen: true})
+                            }
                             className="ml-6 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                         >
                             New Cow
@@ -121,8 +132,21 @@ const CowsPage = () => {
                 </div>
             </div>
             <ListCows cowNames={cowNames} saveCow={saveCow}/>
+            <SlidingPane
+                style={{width : 50}}
+                overlayClassName="some-custom-overlay-class"
+                isOpen={sidePanel.isPaneOpen}
+                title="New Cow"
+                subtitle={new Date().toLocaleDateString()}
+                onRequestClose={() => {
+                    // triggered on "<" on left top click or on outside click
+                    setSidePanel({isPaneOpen: false});
+                }}
+            >
+                <CowDetails cow={null} saveCow={saveCow} setSidePanel={setSidePanel}/>
+            </SlidingPane>
 
         </div>
     )
 }
-export default CowsPage;
+export default TheFarm;
