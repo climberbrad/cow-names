@@ -51,9 +51,12 @@ export default function SideBarDetail({ open, setOpen, saveCow, cow }) {
                                         <div className="px-4 py-6 bg-gray-100 sm:px-6">
                                             <div className="flex items-start justify-between space-x-3">
                                                 <div className="space-y-1">
-                                                    <Dialog.Title className="text-lg font-medium text-gray-900">New Cow</Dialog.Title>
+                                                    <Dialog.Title className="text-lg font-medium text-gray-900">
+                                                        {cow ? cow.name : ("New Cow")}
+                                                    </Dialog.Title>
                                                     <p className="text-sm text-gray-500">
-                                                        Found on {new Date().toLocaleDateString()}.
+                                                        {cow ? cow.date : ("Found on", new Date().toLocaleDateString())}
+
                                                     </p>
                                                 </div>
                                                 <div className="h-7 flex items-center">
