@@ -19,7 +19,7 @@ const CowDetails = (props) => {
     }
 
     return (
-        <div className="mt-5 md:mt-0 md:col-span-2">
+        <div className="mt-5 md:mt-0 md:col-span-2 ">
             <form onSubmit={(e) => {
                 e.preventDefault();
                 saveCow(updateCow())

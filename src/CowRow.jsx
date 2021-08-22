@@ -38,6 +38,7 @@ const CowRow = (props) => {
                 </a>
             </td>
             <SlidingPane
+                size={10}
                 overlayClassName="some class name"
                 isOpen={sidePanel.isPaneOpen}
                 title={cow.name}
