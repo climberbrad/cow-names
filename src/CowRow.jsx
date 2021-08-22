@@ -30,7 +30,7 @@ const CowRow = ({ cow }) => {
                     Edit
                 </a>
             </td>
-            <SideBarDetail setOpen={setOpen} open={open} saveCow={null} cow={cow}/>
+            <SideBarDetail setOpen={setOpen} open={open} cow={cow}/>
         </tr>
     )
 }

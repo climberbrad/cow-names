@@ -3,12 +3,37 @@ import { Dialog, Transition } from '@headlessui/react'
 import { XIcon } from '@heroicons/react/outline'
 import { LinkIcon, PlusIcon, QuestionMarkCircleIcon } from '@heroicons/react/solid'
 
-export default function SideBarDetail({ open, setOpen, saveCow, cow }) {
+export default function SideBarDetail({ open, setOpen, cow }) {
     const [name, setName] = useState(cow?.name | '');
     const [cowId, setCowId] = useState(cow?.id | '');
     const [foundBy, setFoundBy] = useState(cow?.finder || '');
     const [description, setDescription] = useState('');
     const [foundOnDate, setFoundOnDate] = useState('');
+
+    async function saveCow(cow) {
+        if (cow.id) {
+            console.log('here 1', cow.id)
+            const requestOptions = {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(
+                    {
+                        name: cow.name,
+                        id: cow.id,
+                        date: cow.date,
+                        image: cow.image,
+                        finder: cow.finder
+                    })
+            };
+            const resp = await fetch('http://localhost:8080/v0/cows', requestOptions);
+            if (!resp.ok) {
+                console.error(`Error encountered`);
+            }
+        }
+    }
 
 
     const toCow = () => {
@@ -203,6 +228,7 @@ export default function SideBarDetail({ open, setOpen, saveCow, cow }) {
                                         <div className="space-x-3 flex justify-end">
                                             <button
                                                 type="button"
+                                                onClick={() => setOpen(false)}
                                                 className="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                                             >
                                                 Cancel

@@ -42,35 +42,6 @@ const TheFarm = () => {
         setAllCows(json);
     }
 
-    async function saveCow(cow) {
-        console.log('SAVING COW', cow)
-        if (cow.id) {
-            console.log('here 1', cow.id)
-            const requestOptions = {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(
-                    {
-                        name: cow.name,
-                        id: cow.id,
-                        date: cow.date,
-                        image: cow.image,
-                        finder: cow.finder
-                    })
-            };
-            const resp = await fetch('http://localhost:8080/v0/cows', requestOptions);
-            if (!resp.ok) {
-                console.error(`Error encountered`);
-            }
-        }
-        console.log("SAVED!");
-        await fetchCows()
-    }
-
-
     return (
         <div className="min-h-screen bg-blue-500">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -125,7 +96,7 @@ const TheFarm = () => {
                 </div>
             </div>
             <ListCows cowNames={cowNames} />
-            <SideBarDetail setOpen={setOpen} open={open} saveCow={saveCow}/>
+            <SideBarDetail setOpen={setOpen} open={open}/>
         </div>
     )
 }
