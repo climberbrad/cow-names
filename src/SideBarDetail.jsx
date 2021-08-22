@@ -1,44 +1,40 @@
-import { Fragment, useState } from 'react'
-import { Dialog, Transition } from '@headlessui/react'
-import { XIcon } from '@heroicons/react/outline'
-import { LinkIcon, PlusIcon, QuestionMarkCircleIcon } from '@heroicons/react/solid'
+import {Fragment, useState} from 'react'
+import {Dialog, Transition} from '@headlessui/react'
+import {XIcon} from '@heroicons/react/outline'
+import {LinkIcon, PlusIcon, QuestionMarkCircleIcon} from '@heroicons/react/solid'
 
-export default function SideBarDetail({ open, setOpen, cow }) {
-    const [name, setName] = useState(cow?.name | '');
-    const [cowId, setCowId] = useState(cow?.id | '');
-    const [foundBy, setFoundBy] = useState(cow?.finder || '');
+export default function SideBarDetail({open, setOpen, cow}) {
+    const [cowName, setCowName] = useState(cow?.name);
+    const [cowId, setCowId] = useState(cow?.id);
+    const [foundBy, setFoundBy] = useState(cow?.finder);
     const [description, setDescription] = useState('');
     const [foundOnDate, setFoundOnDate] = useState('');
 
-    async function saveCow(cow) {
-        if (cow.id) {
-            console.log('here 1', cow.id)
-            const requestOptions = {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(
-                    {
-                        name: cow.name,
-                        id: cow.id,
-                        date: cow.date,
-                        image: cow.image,
-                        finder: cow.finder
-                    })
-            };
-            const resp = await fetch('http://localhost:8080/v0/cows', requestOptions);
-            if (!resp.ok) {
-                console.error(`Error encountered`);
-            }
+    async function saveCow(cowToSave) {
+        const requestOptions = {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(
+                {
+                    name: cowToSave.name,
+                    id: cowToSave.id,
+                    date: cowToSave.date,
+                    image: '',
+                    finder: cowToSave.finder
+                })
+        };
+        const resp = await fetch('http://localhost:8080/v0/cows', requestOptions);
+        if (!resp.ok) {
+            console.error(`Error encountered`);
         }
     }
 
-
     const toCow = () => {
         let newCow = {
-            name: name,
+            name: cowName,
             id: cowId,
             finder: foundBy,
             date: new Date().toLocaleDateString(),
@@ -51,7 +47,7 @@ export default function SideBarDetail({ open, setOpen, cow }) {
         <Transition.Root show={open} as={Fragment}>
             <Dialog as="div" auto-reopen="true" className="fixed inset-0 overflow-hidden" onClose={setOpen}>
                 <div className="absolute inset-0 overflow-hidden">
-                    <Dialog.Overlay className="absolute inset-0" />
+                    <Dialog.Overlay className="absolute inset-0"/>
 
                     <div className="fixed inset-y-0 right-0 pl-10 max-w-full flex sm:pl-16">
                         <Transition.Child
@@ -64,9 +60,9 @@ export default function SideBarDetail({ open, setOpen, cow }) {
                             leaveTo="translate-x-full"
                         >
                             <div className="w-screen max-w-2xl">
-                                    <form
-                                        className="h-full flex flex-col bg-white shadow-xl overflow-y-scroll"
-                                        onSubmit={(e) => {
+                                <form
+                                    className="h-full flex flex-col bg-white shadow-xl overflow-y-scroll"
+                                    onSubmit={(e) => {
                                         e.preventDefault();
                                         saveCow(toCow());
                                         setOpen(false);
@@ -91,17 +87,19 @@ export default function SideBarDetail({ open, setOpen, cow }) {
                                                         onClick={() => setOpen(false)}
                                                     >
                                                         <span className="sr-only">Close panel</span>
-                                                        <XIcon className="h-6 w-6" aria-hidden="true" />
+                                                        <XIcon className="h-6 w-6" aria-hidden="true"/>
                                                     </button>
                                                 </div>
                                             </div>
                                         </div>
 
                                         {/* Divider container */}
-                                        <div className="py-6 space-y-6 sm:py-0 sm:space-y-0 sm:divide-y sm:divide-gray-200">
+                                        <div
+                                            className="py-6 space-y-6 sm:py-0 sm:space-y-0 sm:divide-y sm:divide-gray-200">
 
                                             {/* Cow Name */}
-                                            <div className="space-y-1 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
+                                            <div
+                                                className="space-y-1 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
                                                 <div>
                                                     <label
                                                         htmlFor="cow-name"
@@ -115,15 +113,16 @@ export default function SideBarDetail({ open, setOpen, cow }) {
                                                         type="text"
                                                         name="cow-name"
                                                         id="cow-name"
-                                                        value={cow?.name}
-                                                        onChange={(e) => setName(e.target.value)}
+                                                        placeholder={cow?.name}
+                                                        onChange={(e) => setCowName(e.target.value)}
                                                         className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                                     />
                                                 </div>
                                             </div>
 
                                             {/* Cow ID */}
-                                            <div className="space-y-1 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
+                                            <div
+                                                className="space-y-1 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
                                                 <div>
                                                     <label
                                                         htmlFor="cow-id"
@@ -136,7 +135,7 @@ export default function SideBarDetail({ open, setOpen, cow }) {
                                                     <input
                                                         type="text"
                                                         name="cow-id"
-                                                        value={cow?.id}
+                                                        placeholder={cow?.id}
                                                         id="cow-id"
                                                         onChange={(e) => setCowId(e.target.value)}
                                                         className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
@@ -145,7 +144,8 @@ export default function SideBarDetail({ open, setOpen, cow }) {
                                             </div>
 
                                             {/* Named By*/}
-                                            <div className="space-y-1 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
+                                            <div
+                                                className="space-y-1 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
                                                 <div>
                                                     <label
                                                         htmlFor="cow-finder"
@@ -159,7 +159,7 @@ export default function SideBarDetail({ open, setOpen, cow }) {
                                                         type="text"
                                                         name="cow-finder"
                                                         id="cow-finder"
-                                                        value={cow?.finder}
+                                                        placeholder={cow?.finder}
                                                         onChange={(e) => setFoundBy(e.target.value)}
                                                         className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                                     />
@@ -167,7 +167,8 @@ export default function SideBarDetail({ open, setOpen, cow }) {
                                             </div>
 
                                             {/* Cow description */}
-                                            <div className="space-y-1 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
+                                            <div
+                                                className="space-y-1 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
                                                 <div>
                                                     <label
                                                         htmlFor="cow-description"
@@ -189,7 +190,8 @@ export default function SideBarDetail({ open, setOpen, cow }) {
                                             </div>
 
                                             {/* Cow Image */}
-                                            <div className="space-y-2 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:items-center sm:px-6 sm:py-1">
+                                            <div
+                                                className="space-y-2 px-4 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:items-center sm:px-6 sm:py-1">
                                                 <div>
                                                     <h3 className="text-sm font-medium text-gray-900">Photo</h3>
                                                 </div>
@@ -204,7 +206,7 @@ export default function SideBarDetail({ open, setOpen, cow }) {
                                                         {/*        <img*/}
                                                         {/*            className="inline-block h-8 w-8 rounded-full"*/}
                                                         {/*            src={person.imageUrl}*/}
-                                                        {/*            alt={person.name}*/}
+                                                        {/*            alt={person.cowName}*/}
                                                         {/*        />*/}
                                                         {/*    </a>*/}
                                                         {/*))}*/}
@@ -214,7 +216,7 @@ export default function SideBarDetail({ open, setOpen, cow }) {
                                                             className="flex-shrink-0 bg-white inline-flex h-8 w-8 items-center justify-center rounded-full border-2 border-dashed border-gray-200 text-gray-400 hover:text-gray-500 hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                                                         >
                                                             <span className="sr-only">Add team member</span>
-                                                            <PlusIcon className="h-5 w-5" aria-hidden="true" />
+                                                            <PlusIcon className="h-5 w-5" aria-hidden="true"/>
                                                         </button>
                                                     </div>
                                                 </div>
@@ -237,7 +239,7 @@ export default function SideBarDetail({ open, setOpen, cow }) {
                                                 type="submit"
                                                 className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                                             >
-                                                {cow ? ( "Save" ) :  ( "Create" )}
+                                                {cow ? ("Save") : ("Create")}
                                             </button>
                                         </div>
                                     </div>
