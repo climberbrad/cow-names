@@ -3,10 +3,10 @@ import { Dialog, Transition } from '@headlessui/react'
 import { XIcon } from '@heroicons/react/outline'
 import { LinkIcon, PlusIcon, QuestionMarkCircleIcon } from '@heroicons/react/solid'
 
-export default function SideBarDetail({ open, setOpen, saveCow }) {
-    const [name, setName] = useState('');
-    const [cowId, setCowId] = useState('');
-    const [foundBy, setFoundBy] = useState('');
+export default function SideBarDetail({ open, setOpen, saveCow, cow }) {
+    const [name, setName] = useState(cow?.name | '');
+    const [cowId, setCowId] = useState(cow?.id | '');
+    const [foundBy, setFoundBy] = useState(cow?.finder || '');
     const [description, setDescription] = useState('');
     const [foundOnDate, setFoundOnDate] = useState('');
 
@@ -54,7 +54,6 @@ export default function SideBarDetail({ open, setOpen, saveCow }) {
                                                     <Dialog.Title className="text-lg font-medium text-gray-900">New Cow</Dialog.Title>
                                                     <p className="text-sm text-gray-500">
                                                         Found on {new Date().toLocaleDateString()}.
-                                                        {/*{setFoundOnDate(new Date().toLocaleDateString())}*/}
                                                     </p>
                                                 </div>
                                                 <div className="h-7 flex items-center">
@@ -88,6 +87,7 @@ export default function SideBarDetail({ open, setOpen, saveCow }) {
                                                         type="text"
                                                         name="cow-name"
                                                         id="cow-name"
+                                                        value={cow?.name}
                                                         onChange={(e) => setName(e.target.value)}
                                                         className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                                     />
@@ -108,6 +108,7 @@ export default function SideBarDetail({ open, setOpen, saveCow }) {
                                                     <input
                                                         type="text"
                                                         name="cow-id"
+                                                        value={cow?.id}
                                                         id="cow-id"
                                                         onChange={(e) => setCowId(e.target.value)}
                                                         className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
@@ -130,6 +131,7 @@ export default function SideBarDetail({ open, setOpen, saveCow }) {
                                                         type="text"
                                                         name="cow-finder"
                                                         id="cow-finder"
+                                                        value={cow?.finder}
                                                         onChange={(e) => setFoundBy(e.target.value)}
                                                         className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
                                                     />
@@ -206,7 +208,7 @@ export default function SideBarDetail({ open, setOpen, saveCow }) {
                                                 type="submit"
                                                 className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                                             >
-                                                Create
+                                                {cow ? ( "Save" ) :  ( "Create" )}
                                             </button>
                                         </div>
                                     </div>

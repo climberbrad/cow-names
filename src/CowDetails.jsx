@@ -1,29 +1,15 @@
 import {useState} from "react";
 
-const CowDetails = (props) => {
-    const {cow, saveCow, setSidePanel} = props;
+const CowDetails = ({ cow }) => {
 
     const [cowName, setCowName] = useState(cow?.name);
     const [cowFinder, setFinder] = useState(cow?.finder);
     const [cowId, setCowId] = useState(cow?.Id);
 
-    const updateCow = () => {
-        let newCow = {
-            name: cowName,
-            id: cowId,
-            finder: cowFinder,
-            date: new Date().toLocaleDateString(),
-            image: '',
-        }
-        return newCow;
-    }
-
     return (
         <div className="mt-5 md:mt-0 md:col-span-2 ">
             <form onSubmit={(e) => {
                 e.preventDefault();
-                saveCow(updateCow())
-                setSidePanel({isPaneOpen: false});
             }}>
                 <div className="shadow sm:rounded-lg sm:overflow-hidden">
                     <div className="px-4 py-5 bg-white space-y-6 sm:p-6">

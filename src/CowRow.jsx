@@ -1,15 +1,8 @@
-import SlidingPane from "react-sliding-pane";
-import CowDetails from "./CowDetails";
+import SideBarDetail from "./SideBarDetail";
 import {useState} from "react";
 
-const CowRow = (props) => {
-    const {cow, saveCow} = props;
-
-    const [sidePanel, setSidePanel] = useState({
-        isPaneOpen: false,
-        isPanelOpenLeft: false,
-        hideHeader: true
-    })
+const CowRow = ({ cow }) => {
+    const [open, setOpen] = useState(false)
 
     return (
         <tr key={cow.id}>
@@ -31,25 +24,14 @@ const CowRow = (props) => {
             </td>
             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{cow.finder}</td>
             <td className="px-6 py-4 whitespace-nowrap text-left text-sm font-medium">
-                <a href="#" className="text-indigo-600 hover:text-indigo-900" onClick={
-                    () => setSidePanel({isPaneOpen: true})
-                }>
+                <a
+                    onClick={() => setOpen(true)}
+                    href="#" className="text-indigo-600 hover:text-indigo-900">
                     Edit
                 </a>
             </td>
-            <SlidingPane
-                size={10}
-                overlayClassName="some class name"
-                isOpen={sidePanel.isPaneOpen}
-                title={cow.name}
-                subtitle={cow.date}
-                onRequestClose={() => {
-                    setSidePanel({isPaneOpen: false});
-                }}
-            >
-                <CowDetails cow={cow} saveCow={saveCow} setSidePanel={setSidePanel}/>
-            </SlidingPane>
+            <SideBarDetail setOpen={setOpen} open={open} saveCow={null} cow={cow}/>
         </tr>
-)
+    )
 }
 export default CowRow;

@@ -33,12 +33,10 @@ const TheFarm = () => {
 
     async function fetchCows() {
         const res = await fetch('http://localhost:8080/v0/cows');
-
         if (!res.ok) {
             console.error(`Error encountered ${res.error()}`);
             throw new Error(res.error)
         }
-
         const json = await res.json();
         setCowNames(json);
         setAllCows(json);
@@ -126,22 +124,8 @@ const TheFarm = () => {
                     </div>
                 </div>
             </div>
-            <ListCows cowNames={cowNames} saveCow={saveCow}/>
+            <ListCows cowNames={cowNames} />
             <SideBarDetail setOpen={setOpen} open={open} saveCow={saveCow}/>
-            {/*<SlidingPane*/}
-            {/*    size={10}*/}
-            {/*    overlayClassName="min-h-screen bg-blue-500"*/}
-            {/*    isOpen={sidePanel.isPaneOpen}*/}
-            {/*    title="Old Cow"*/}
-            {/*    subtitle={new Date().toLocaleDateString()}*/}
-            {/*    onRequestClose={() => {*/}
-            {/*        // triggered on "<" on left top click or on outside click*/}
-            {/*        setSidePanel({isPaneOpen: false});*/}
-            {/*    }}*/}
-            {/*>*/}
-            {/*    <CowDetails cow={null} saveCow={saveCow} setSidePanel={setSidePanel}/>*/}
-            {/*</SlidingPane>*/}
-
         </div>
     )
 }

@@ -1,7 +1,7 @@
 import "react-sliding-pane/dist/react-sliding-pane.css";
 import CowRow from './CowRow';
 
-const ListCows = ({ cowNames, saveCow }) => {
+const ListCows = ({ cowNames }) => {
 
     return (
         <div className="flex flex-col pl-5 pr-5">
@@ -44,7 +44,7 @@ const ListCows = ({ cowNames, saveCow }) => {
                             {(cowNames && cowNames?.length > 0) && (
                                 <tbody className="bg-white divide-y divide-gray-200">
                                 {cowNames.map((cow) => (
-                                    <CowRow key={cow.id} cow={cow} saveCow={saveCow}/>
+                                    <CowRow key={cow.id} cow={cow} />
                                 ))}
                                 </tbody>
                             )}
