@@ -115,7 +115,7 @@ export default function SideBarDetail({open, setOpen, cow}) {
                                                         id="cow-name"
                                                         placeholder={cow?.name}
                                                         onChange={(e) => setCowName(e.target.value)}
-                                                        className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                                        className="block w-full shadow-sm sm:text-sm focus:ring-blue-500 focus:border-blue-500 border-gray-300 rounded-md"
                                                     />
                                                 </div>
                                             </div>
@@ -138,7 +138,7 @@ export default function SideBarDetail({open, setOpen, cow}) {
                                                         placeholder={cow?.id}
                                                         id="cow-id"
                                                         onChange={(e) => setCowId(e.target.value)}
-                                                        className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                                        className="block w-full shadow-sm sm:text-sm focus:ring-blue-500 focus:border-blue-500 border-gray-300 rounded-md"
                                                     />
                                                 </div>
                                             </div>
@@ -161,7 +161,7 @@ export default function SideBarDetail({open, setOpen, cow}) {
                                                         id="cow-finder"
                                                         placeholder={cow?.finder}
                                                         onChange={(e) => setFoundBy(e.target.value)}
-                                                        className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+                                                        className="block w-full shadow-sm sm:text-sm focus:ring-blue-500 focus:border-blue-500 border-gray-300 rounded-md"
                                                     />
                                                 </div>
                                             </div>
@@ -183,7 +183,7 @@ export default function SideBarDetail({open, setOpen, cow}) {
                               name="cow-description"
                               onChange={(e) => setDescription(e.target.value)}
                               rows={3}
-                              className="block w-full shadow-sm sm:text-sm focus:ring-indigo-500 focus:border-indigo-500 border border-gray-300 rounded-md"
+                              className="block w-full shadow-sm sm:text-sm focus:ring-blue-500 focus:border-blue-500 border border-gray-300 rounded-md"
                               defaultValue={''}
                           />
                                                 </div>
@@ -213,7 +213,7 @@ export default function SideBarDetail({open, setOpen, cow}) {
 
                                                         <button
                                                             type="button"
-                                                            className="flex-shrink-0 bg-white inline-flex h-8 w-8 items-center justify-center rounded-full border-2 border-dashed border-gray-200 text-gray-400 hover:text-gray-500 hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                                            className="flex-shrink-0 bg-white inline-flex h-8 w-8 items-center justify-center rounded-full border-2 border-dashed border-gray-200 text-gray-400 hover:text-gray-500 hover:border-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                                                         >
                                                             <span className="sr-only">Add team member</span>
                                                             <PlusIcon className="h-5 w-5" aria-hidden="true"/>
@@ -231,13 +231,13 @@ export default function SideBarDetail({open, setOpen, cow}) {
                                             <button
                                                 type="button"
                                                 onClick={() => setOpen(false)}
-                                                className="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                                className="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                                             >
                                                 Cancel
                                             </button>
                                             <button
                                                 type="submit"
-                                                className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                                className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                                             >
                                                 {cow ? ("Save") : ("Create")}
                                             </button>

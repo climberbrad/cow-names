@@ -1,45 +1,35 @@
 import {SearchIcon} from '@heroicons/react/solid'
-import {useEffect, useState} from "react";
+import {useState,} from "react";
+import {useQuery} from 'react-query';
 import ListCows from "./ListCows";
 import SideBarDetail from "./SideBarDetail";
 
+const fetchData = async () => {
+    const res = await fetch('http://localhost:8080/v0/cows');
+    return res.json();
+}
 
 const TheFarm = () => {
-    const [allCows, setAllCows] = useState([])
-    const [cowNames, setCowNames] = useState([])
     const [open, setOpen] = useState(false)
+    const {data, status, error} = useQuery('cows', fetchData)
+    const [searchResults, setSearchResults] = useState([])
 
     function searchCows(searchTerm) {
-        setCowNames(allCows)
+        setSearchResults(data)
         const search = searchTerm.toLowerCase().trim()
 
-        if (search == null || searchTerm.length === 0) {
-            setCowNames(allCows)
+        if (search == null || search.length === 0) {
+            setSearchResults(data)
         } else {
-            let results = allCows.filter((cow) => cow.name.toLowerCase().startsWith(search))
+            let results = data.filter((cow) => cow.name.toLowerCase().startsWith(search))
             if (results.length === 0) {
-                results = allCows.filter((cow) => cow.id.toLowerCase().startsWith(search))
+                results = data.filter((cow) => cow.id.toLowerCase().startsWith(search))
             }
             if (results.length === 0) {
-                results = allCows.filter((cow) => cow.finder.toLowerCase().startsWith(search))
+                results = data.filter((cow) => cow.finder.toLowerCase().startsWith(search))
             }
-            setCowNames(results)
+            setSearchResults(results)
         }
-    }
-
-    useEffect(() => {
-        fetchCows()
-    }, [])
-
-    async function fetchCows() {
-        const res = await fetch('http://localhost:8080/v0/cows');
-        if (!res.ok) {
-            console.error(`Error encountered ${res.error()}`);
-            throw new Error(res.error)
-        }
-        const json = await res.json();
-        setCowNames(json);
-        setAllCows(json);
     }
 
     return (
@@ -95,8 +85,21 @@ const TheFarm = () => {
                     </div>
                 </div>
             </div>
-            <ListCows cowNames={cowNames} />
-            <SideBarDetail setOpen={setOpen} open={open}/>
+
+            {status == 'loading' && (
+                <div>loading...</div>
+            )}
+
+            {status == 'error' && (
+                <div>Error fetching data {error}</div>
+            )}
+
+            {status == 'success' && (
+                <div>
+                    <ListCows cowNames={searchResults}/>
+                    <SideBarDetail setOpen={setOpen} open={open}/>
+                </div>
+            )}
         </div>
     )
 }
