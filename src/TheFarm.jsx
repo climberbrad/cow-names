@@ -3,6 +3,7 @@ import {useState,} from "react";
 import {useQuery} from 'react-query';
 import ListCows from "./ListCows";
 import SideBarDetail from "./SideBarDetail";
+import {stringify} from "postcss";
 
 const fetchData = async () => {
     const res = await fetch('http://localhost:8080/v0/cows');
@@ -13,14 +14,16 @@ const TheFarm = () => {
     const [open, setOpen] = useState(false)
     const {data, status, error} = useQuery('cows', fetchData)
     const [searchResults, setSearchResults] = useState([])
+    const [isSearch, setIsSearch] = useState(false)
 
     function searchCows(searchTerm) {
         setSearchResults(data)
         const search = searchTerm.toLowerCase().trim()
 
         if (search == null || search.length === 0) {
-            setSearchResults(data)
+            setIsSearch(false)
         } else {
+            setIsSearch(true)
             let results = data.filter((cow) => cow.name.toLowerCase().startsWith(search))
             if (results.length === 0) {
                 results = data.filter((cow) => cow.id.toLowerCase().startsWith(search))
@@ -96,8 +99,8 @@ const TheFarm = () => {
 
             {status == 'success' && (
                 <div>
-                    <ListCows cowNames={searchResults}/>
-                    <SideBarDetail setOpen={setOpen} open={open}/>
+                    <ListCows cowNames={isSearch ? searchResults : data} isSearch={setIsSearch}/>
+                    <SideBarDetail setOpen={setOpen} open={open} isSearch={setIsSearch} />
                 </div>
             )}
         </div>

@@ -3,7 +3,7 @@ import {Dialog, Transition} from '@headlessui/react'
 import {XIcon} from '@heroicons/react/outline'
 import {LinkIcon, PlusIcon, QuestionMarkCircleIcon} from '@heroicons/react/solid'
 
-export default function SideBarDetail({open, setOpen, cow}) {
+export default function SideBarDetail({open, setOpen, cow, isSearch}) {
     const [cowName, setCowName] = useState(cow?.name);
     const [cowId, setCowId] = useState(cow?.id);
     const [foundBy, setFoundBy] = useState(cow?.finder);
@@ -30,6 +30,7 @@ export default function SideBarDetail({open, setOpen, cow}) {
         if (!resp.ok) {
             console.error(`Error encountered`);
         }
+        isSearch(false)
     }
 
     const toCow = () => {
