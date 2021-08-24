@@ -35,7 +35,7 @@ const CowRow = ({cow}) => {
             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{cow.finder}</td>
             <td className="px-6 py-4 whitespace-nowrap text-left text-sm font-medium">
                 <a href="#">
-                    <img className="block h-6 w-auto " alt="trash" src="trash.png"/>
+                    <img className="block h-5 w-auto " alt="trash" src="trash.png"/>
                 </a>
             </td>
             <CowItem setOpen={setOpen} open={open} cow={cow}/>
