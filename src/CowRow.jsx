@@ -1,7 +1,7 @@
-import SideBarDetail from "./SideBarDetail";
+import CowItem from "./CowItem";
 import {useState} from "react";
 
-const CowRow = ({ cow, isSearch }) => {
+const CowRow = ({ cow }) => {
     const [open, setOpen] = useState(false)
 
     return (
@@ -30,7 +30,7 @@ const CowRow = ({ cow, isSearch }) => {
                     Edit
                 </a>
             </td>
-            <SideBarDetail setOpen={setOpen} open={open} cow={cow} isSearch={isSearch}/>
+            <CowItem setOpen={setOpen} open={open} cow={cow} />
         </tr>
     )
 }

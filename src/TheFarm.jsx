@@ -1,20 +1,19 @@
 import {SearchIcon} from '@heroicons/react/solid'
 import {useState,} from "react";
-import {useQuery} from 'react-query';
+import {useQuery, QueryClient, useQueryClient} from 'react-query';
 import ListCows from "./ListCows";
-import SideBarDetail from "./SideBarDetail";
-import {stringify} from "postcss";
-
-const fetchData = async () => {
-    const res = await fetch('http://localhost:8080/v0/cows');
-    return res.json();
-}
+import CowItem from "./CowItem";
+import {fetchData} from "./Api";
 
 const TheFarm = () => {
     const [open, setOpen] = useState(false)
-    const {data, status, error} = useQuery('cows', fetchData)
     const [searchResults, setSearchResults] = useState([])
     const [isSearch, setIsSearch] = useState(false)
+    const {data, status, error, refetch} = useQuery("fetchCows", fetchData, {
+        onSuccess: () => {
+            setIsSearch(false)
+        }
+    })
 
     function searchCows(searchTerm) {
         setSearchResults(data)
@@ -77,11 +76,8 @@ const TheFarm = () => {
                     <div className="flex items-center md:absolute md:right-0 md:inset-y-0 lg:hidden">
                     </div>
                     <div className="hidden lg:flex lg:items-center lg:justify-end xl:col-span-4">
-                        <a
-                            onClick={
-                                () => setOpen(true)
-                            }
-                            className="ml-6 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-600"
+                        <a onClick={() => setOpen(true)}
+                           className="ml-6 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-600"
                         >
                             New Cow
                         </a>
@@ -89,18 +85,18 @@ const TheFarm = () => {
                 </div>
             </div>
 
-            {status == 'loading' && (
+            {status === 'loading' && (
                 <div>loading...</div>
             )}
 
-            {status == 'error' && (
+            {status === 'error' && (
                 <div>Error fetching data {error}</div>
             )}
 
-            {status == 'success' && (
+            {status === 'success' && (
                 <div>
-                    <ListCows cowNames={isSearch ? searchResults : data} isSearch={setIsSearch}/>
-                    <SideBarDetail setOpen={setOpen} open={open} isSearch={setIsSearch} />
+                    <ListCows cowList={isSearch ? searchResults : data}/>
+                    <CowItem setOpen={setOpen} open={open} />
                 </div>
             )}
         </div>

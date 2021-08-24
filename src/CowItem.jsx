@@ -1,47 +1,33 @@
 import {Fragment, useState} from 'react'
+import {saveCow} from './Api'
 import {Dialog, Transition} from '@headlessui/react'
 import {XIcon} from '@heroicons/react/outline'
 import {LinkIcon, PlusIcon, QuestionMarkCircleIcon} from '@heroicons/react/solid'
+import {useMutation, useQueryClient} from "react-query";
 
-export default function SideBarDetail({open, setOpen, cow, isSearch}) {
+export default function CowItem({open, setOpen, cow}) {
+    const queryClient = useQueryClient();
     const [cowName, setCowName] = useState(cow?.name);
     const [cowId, setCowId] = useState(cow?.id);
     const [foundBy, setFoundBy] = useState(cow?.finder);
     const [description, setDescription] = useState('');
     const [foundOnDate, setFoundOnDate] = useState('');
 
-    async function saveCow(cowToSave) {
-        const requestOptions = {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(
-                {
-                    name: cowToSave.name,
-                    id: cowToSave.id,
-                    date: cowToSave.date,
-                    image: '',
-                    finder: cowToSave.finder
-                })
-        };
-        const resp = await fetch('http://localhost:8080/v0/cows', requestOptions);
-        if (!resp.ok) {
-            console.error(`Error encountered`);
+    const {mutate, info} = useMutation(saveCow, {
+        onSuccess: (data) => {
+            void queryClient.invalidateQueries("fetchCows");
+            setOpen(false);
         }
-        isSearch(false)
-    }
+    });
 
-    const toCow = () => {
-        let newCow = {
+    const update = async () => {
+        await mutate({
             name: cowName,
             id: cowId,
             finder: foundBy,
-            date: new Date().toLocaleDateString(),
+            date: cow?.date || new Date().toLocaleDateString(),
             image: '',
-        }
-        return newCow;
+        })
     }
 
     return (
@@ -65,8 +51,7 @@ export default function SideBarDetail({open, setOpen, cow, isSearch}) {
                                     className="h-full flex flex-col bg-white shadow-xl overflow-y-scroll"
                                     onSubmit={(e) => {
                                         e.preventDefault();
-                                        saveCow(toCow());
-                                        setOpen(false);
+                                        update();
                                     }}>
                                     <div className="flex-1">
                                         {/* Header */}
