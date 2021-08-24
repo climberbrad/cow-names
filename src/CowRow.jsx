@@ -1,7 +1,7 @@
 import CowItem from "./CowItem";
 import {useState} from "react";
 
-const CowRow = ({ cow }) => {
+const CowRow = ({cow}) => {
     const [open, setOpen] = useState(false)
 
     return (
@@ -9,10 +9,20 @@ const CowRow = ({ cow }) => {
             <td className="px-6 py-4 whitespace-nowrap">
                 <div className="flex items-center">
                     <div className="flex-shrink-0 h-10 w-10">
-                        <img className="h-10 w-10 rounded-full" src="./cow_head.jpeg" alt=""/>
+                        <a
+                            onClick={() => setOpen(true)}
+                            href="#" className="text-sm font-medium text-gray-900">
+                            <img className="h-10 w-10 rounded-full" src="./cow_head.jpeg" alt=""/>
+                        </a>
                     </div>
                     <div className="ml-4">
-                        <div className="text-sm font-medium text-gray-900">{cow.name}</div>
+                        <div className="text-sm font-medium text-gray-900">
+                            <a
+                                onClick={() => setOpen(true)}
+                                href="#" className="text-sm font-medium text-gray-900">
+                                {cow.name}
+                            </a>
+                        </div>
                     </div>
                 </div>
             </td>
@@ -24,13 +34,11 @@ const CowRow = ({ cow }) => {
             </td>
             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{cow.finder}</td>
             <td className="px-6 py-4 whitespace-nowrap text-left text-sm font-medium">
-                <a
-                    onClick={() => setOpen(true)}
-                    href="#" className="text-indigo-600 hover:text-indigo-900">
-                    Edit
+                <a href="#">
+                    <img className="block h-6 w-auto " alt="trash" src="trash.png"/>
                 </a>
             </td>
-            <CowItem setOpen={setOpen} open={open} cow={cow} />
+            <CowItem setOpen={setOpen} open={open} cow={cow}/>
         </tr>
     )
 }

@@ -7,7 +7,6 @@ export const fetchData = async () => {
 }
 
 export const saveCow = async (data) => {
-    console.log('SAVE')
     const options = {
         method: 'POST',
         headers: {
@@ -17,6 +16,16 @@ export const saveCow = async (data) => {
         body: JSON.stringify(data)
     };
     const resp = await fetch('http://localhost:8080/v0/cows', options);
+    if (!resp.ok) {
+        console.error(`Error encountered`);
+    }
+}
+
+export const deleteCow = async ({id}) => {
+    const options = {
+        method: 'DELETE'
+    };
+    const resp = await fetch(`http://localhost:8080/v0/cows/${id}`, options);
     if (!resp.ok) {
         console.error(`Error encountered`);
     }
