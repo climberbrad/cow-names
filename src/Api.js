@@ -12,7 +12,6 @@ export const saveCow = async (data) => {
         headers: {
             'Content-Type': 'application/json',
         },
-        mode: 'no-cors',
         body: JSON.stringify(data)
     };
     const resp = await fetch('http://localhost:8080/posts', options);
@@ -28,7 +27,6 @@ export const deleteCow = async ({id}) => {
         headers: {
             'Content-Type': 'application/json',
         },
-        mode: 'no-cors',
     };
     const resp = await fetch(`http://localhost:8080/posts/${id}`, options);
     if (!resp.ok) {
