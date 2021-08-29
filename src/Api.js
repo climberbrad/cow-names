@@ -1,7 +1,7 @@
 export const fetchData = async () => {
     const res = await fetch('http://localhost:8080/posts');
     if(!res.ok) {
-        throw new Error("Something went wrong.")
+        throw new Error("Error fetching cow.")
     }
     return res.json();
 }
@@ -16,7 +16,7 @@ export const saveCow = async (data) => {
     };
     const resp = await fetch('http://localhost:8080/posts', options);
     if (!resp.ok) {
-        console.error(`Error encountered`);
+        console.error(`Error savings cows`);
     }
 }
 
@@ -30,6 +30,6 @@ export const deleteCow = async ({id}) => {
     };
     const resp = await fetch(`http://localhost:8080/posts/${id}`, options);
     if (!resp.ok) {
-        console.error(`Error encountered`);
+        console.error(`Error deleting cows`);
     }
 }
