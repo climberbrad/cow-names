@@ -10,7 +10,7 @@ export default function CowItem({open, setOpen, cow}) {
     const [cowName, setCowName] = useState(cow?.name);
     const [cowId, setCowId] = useState(cow?.id);
     const [foundBy, setFoundBy] = useState(cow?.finder);
-    const [description, setDescription] = useState('');
+    const [description, setDescription] = useState(cow?.description);
     const [foundOnDate, setFoundOnDate] = useState('');
 
     const {mutate, info} = useMutation(saveCow, {
@@ -27,6 +27,7 @@ export default function CowItem({open, setOpen, cow}) {
             finder: foundBy,
             date: cow?.date || new Date().toLocaleDateString(),
             image: '',
+            description: description,
         })
     }
 
@@ -167,10 +168,11 @@ export default function CowItem({open, setOpen, cow}) {
                           <textarea
                               id="cow-description"
                               name="cow-description"
+                              placeholder={description}
                               onChange={(e) => setDescription(e.target.value)}
                               rows={3}
                               className="block w-full shadow-sm sm:text-sm focus:ring-blue-500 focus:border-blue-500 border border-gray-300 rounded-md"
-                              defaultValue={''}
+                              defaultValue={description}
                           />
                                                 </div>
                                             </div>
