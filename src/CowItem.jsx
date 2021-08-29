@@ -124,6 +124,7 @@ export default function CowItem({open, setOpen, cow}) {
                                                         name="cow-id"
                                                         placeholder={cow?.id}
                                                         id="cow-id"
+                                                        disabled={cow?.id !== undefined}
                                                         onChange={(e) => setCowId(e.target.value)}
                                                         className="block w-full shadow-sm sm:text-sm focus:ring-blue-500 focus:border-blue-500 border-gray-300 rounded-md"
                                                     />
@@ -168,11 +169,11 @@ export default function CowItem({open, setOpen, cow}) {
                           <textarea
                               id="cow-description"
                               name="cow-description"
-                              placeholder={description}
+                              placeholder={cow?.description}
                               onChange={(e) => setDescription(e.target.value)}
                               rows={3}
                               className="block w-full shadow-sm sm:text-sm focus:ring-blue-500 focus:border-blue-500 border border-gray-300 rounded-md"
-                              defaultValue={description}
+                              defaultValue={cow?.description}
                           />
                                                 </div>
                                             </div>
