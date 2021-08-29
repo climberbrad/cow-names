@@ -1,8 +1,26 @@
 import CowItem from "./CowItem";
 import {useState} from "react";
+import {useMutation, useQueryClient} from "react-query";
+import {deleteCow, saveCow} from "./Api";
 
 const CowRow = ({cow}) => {
+    const queryClient = useQueryClient();
     const [open, setOpen] = useState(false)
+    const {mutate, info} = useMutation(deleteCow, {
+        onSuccess: (data) => {
+            void queryClient.invalidateQueries("fetchCows");
+        }
+    });
+
+    const handleDelete = async (cow) => {
+        await mutate({
+            name: cow.name,
+            id: cow.id,
+            finder: cow.finder,
+            date: cow.date,
+            image: '',
+        })
+    }
 
     return (
         <tr key={cow.id}>
@@ -34,7 +52,7 @@ const CowRow = ({cow}) => {
             </td>
             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{cow.finder}</td>
             <td className="px-6 py-4 whitespace-nowrap text-left text-sm font-medium">
-                <a href="#">
+                <a href="#" onClick={() => handleDelete(cow)} >
                     <img className="block h-5 w-auto " alt="trash" src="trash.png"/>
                 </a>
             </td>

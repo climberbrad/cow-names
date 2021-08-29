@@ -1,5 +1,5 @@
 export const fetchData = async () => {
-    const res = await fetch('http://localhost:8080/v0/cows');
+    const res = await fetch('http://localhost:8080/posts');
     if(!res.ok) {
         throw new Error("Something went wrong.")
     }
@@ -15,17 +15,22 @@ export const saveCow = async (data) => {
         mode: 'no-cors',
         body: JSON.stringify(data)
     };
-    const resp = await fetch('http://localhost:8080/v0/cows', options);
+    const resp = await fetch('http://localhost:8080/posts', options);
     if (!resp.ok) {
         console.error(`Error encountered`);
     }
 }
 
 export const deleteCow = async ({id}) => {
+    console.log('DELETE', id)
     const options = {
-        method: 'DELETE'
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        mode: 'no-cors',
     };
-    const resp = await fetch(`http://localhost:8080/v0/cows/${id}`, options);
+    const resp = await fetch(`http://localhost:8080/posts/${id}`, options);
     if (!resp.ok) {
         console.error(`Error encountered`);
     }
