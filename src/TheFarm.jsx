@@ -3,13 +3,13 @@ import {useState,} from "react";
 import {useQuery, QueryClient, useQueryClient} from 'react-query';
 import ListCows from "./ListCows";
 import CowItem from "./CowItem";
-import {fetchData} from "./Api";
+import {fetchCows} from "./Api";
 
 const TheFarm = () => {
     const [open, setOpen] = useState(false)
     const [searchResults, setSearchResults] = useState([])
     const [isSearch, setIsSearch] = useState(false)
-    const {data, status, error, refetch} = useQuery("fetchCows", fetchData, {
+    const {data, status, error} = useQuery("fetchCows", fetchCows, {
         onSuccess: () => {
             setIsSearch(false)
         }

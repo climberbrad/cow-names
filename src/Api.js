@@ -1,5 +1,5 @@
-export const fetchData = async () => {
-    const res = await fetch('http://localhost:8080/posts');
+export const fetchCows = async () => {
+    const res = await fetch('http://localhost:8080/cows');
     if(!res.ok) {
         throw new Error("Error fetching cow.")
     }
@@ -14,7 +14,7 @@ export const saveCow = async (data) => {
         },
         body: JSON.stringify(data)
     };
-    const resp = await fetch('http://localhost:8080/posts', options);
+    const resp = await fetch('http://localhost:8080/cows', options);
     if (!resp.ok) {
         console.error(`Error savings cows`);
     }
@@ -28,7 +28,7 @@ export const deleteCow = async ({id}) => {
             'Content-Type': 'application/json',
         },
     };
-    const resp = await fetch(`http://localhost:8080/posts/${id}`, options);
+    const resp = await fetch(`http://localhost:8080/cows/${id}`, options);
     if (!resp.ok) {
         console.error(`Error deleting cows`);
     }
